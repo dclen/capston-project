@@ -21,10 +21,12 @@ function Create() {
   const [currentValue, setCurrentValue] = useState(0);
   const [firstRegistered, setFirstRegistered] = useState(new Date());
 
+
+  const[invalidPrefix, setInvalidPrefix]=useState(false);
+
   let history = useHistory();
 
   const callMockAPI = () => {
-
     const formData = {
       prefix,
       firstName,
@@ -51,6 +53,7 @@ function Create() {
       .catch((err) => console.log(err));
   };
 
+
   return (
     <div className="create">
       <Form size="big">
@@ -70,6 +73,7 @@ function Create() {
               <option value="Ms">Ms</option>
               <option value="Dr">Dr</option>
             </select>
+            {invalidPrefix&&<span>must have prefix</span>}
           </Form.Field>
           <Form.Field width={7}>
             <label>First Name</label>
@@ -77,6 +81,7 @@ function Create() {
               placeholder="First Name"
               onChange={(e) => setFirstName(e.target.value)}
             />
+            <span>required</span>
           </Form.Field>
           <Form.Field width={7}>
             <label>Last Name</label>
@@ -208,7 +213,9 @@ function Create() {
           </Form.Group>
         </Form.Field>
         <Form.Field width={5}>
-          <label>What is the <b>current value</b> of the vehicle?</label>
+          <label>
+            What is the <b>current value</b> of the vehicle?
+          </label>
           <Input
             label="£"
             type="number"
@@ -217,7 +224,6 @@ function Create() {
             placeholder="Vehicle Value"
             onChange={(e) => setCurrentValue(e.target.value)}
           />
-
         </Form.Field>
         <Form.Field width={5}>
           <label>When was vehicle first registered?</label>
@@ -225,7 +231,6 @@ function Create() {
             type="date"
             onChange={(e) => setFirstRegistered(e.target.value)}
           />
-
         </Form.Field>
         <Button color="blue" type="submit" onClick={callMockAPI}>
           Submit
