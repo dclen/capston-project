@@ -35,6 +35,11 @@ function Read() {
     localStorage.setItem("postcode", data.postcode);
     localStorage.setItem("vehicleType", data.vehicleType);
     localStorage.setItem("engineSize", data.engineSize);
+    localStorage.setItem("additionalDrivers", data.additionalDrivers);
+    localStorage.setItem("usedForCommercial", data.usedForCommercial);
+    localStorage.setItem("usedOutsideState", data.usedOutsideState);
+    localStorage.setItem("currentValue", data.currentValue);
+    localStorage.setItem("firstRegistered", data.firstRegistered);
   }
 
   function onDelete(id) {
@@ -63,6 +68,11 @@ function Read() {
             <Table.HeaderCell>Postcode</Table.HeaderCell>
             <Table.HeaderCell>Vehicle Type</Table.HeaderCell>
             <Table.HeaderCell>Engine Size</Table.HeaderCell>
+            <Table.HeaderCell>Additional Drivers</Table.HeaderCell>
+            <Table.HeaderCell>Commercial Use?</Table.HeaderCell>
+            <Table.HeaderCell>Used Outside State?</Table.HeaderCell>
+            <Table.HeaderCell>Current Value(£)</Table.HeaderCell>
+            <Table.HeaderCell>Date Registered</Table.HeaderCell>
             <Table.HeaderCell>Update</Table.HeaderCell>
             <Table.HeaderCell>Delete</Table.HeaderCell>
           </Table.Row>
@@ -83,6 +93,11 @@ function Read() {
                 <Table.Cell>{data.postcode}</Table.Cell>
                 <Table.Cell>{data.vehicleType}</Table.Cell>
                 <Table.Cell>{data.engineSize}</Table.Cell>
+                <Table.Cell>{data.additionalDrivers}</Table.Cell>
+                <Table.Cell>{data.usedForCommercial}</Table.Cell>
+                <Table.Cell>{data.usedOutsideState}</Table.Cell>
+                <Table.Cell>{data.currentValue}</Table.Cell>
+                <Table.Cell>{data.firstRegistered}</Table.Cell>
 
                 <Table.Cell>
                   <Link to="/update">

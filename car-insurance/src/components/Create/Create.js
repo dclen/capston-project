@@ -1,6 +1,6 @@
 import "./Create.css";
 import React, { useState } from "react";
-import { Button, Form, Card } from "semantic-ui-react";
+import { Button, Form, Input } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 
@@ -18,13 +18,12 @@ function Create() {
   const [additionalDrivers, setAdditionalDrivers] = useState(0);
   const [usedForCommercial, setUsedForCommercial] = useState("");
   const [usedOutsideState, setUsedOutsideState] = useState("");
-  const [currentValue, setCurrentValue] = useState("");
+  const [currentValue, setCurrentValue] = useState(0);
   const [firstRegistered, setFirstRegistered] = useState(new Date());
 
   let history = useHistory();
 
   const callMockAPI = () => {
-    console.log(prefix + " " + firstName + " " + lastName);
 
     const formData = {
       prefix,
@@ -54,7 +53,7 @@ function Create() {
 
   return (
     <div className="create">
-      <Form>
+      <Form size="big">
         <Form.Group>
           <Form.Field width={3}>
             <label>Prefix</label>
@@ -158,18 +157,18 @@ function Create() {
             How many <b>additional drivers</b> will use the vehicle?
           </label>
           <select
-            placeholder="Engine Size"
-            onChange={(e) => setEngineSize(e.target.value)}
+            placeholder="Additional Drivers"
+            onChange={(e) => setAdditionalDrivers(e.target.value)}
           >
             <option value="" disabled selected hidden>
               Please Choose...
             </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
           </select>
-        </Form.Field>{" "}
+        </Form.Field>
         <Form.Field>
           <Form.Group inline>
             <label>
@@ -189,7 +188,46 @@ function Create() {
             />
           </Form.Group>
         </Form.Field>
-        <Button type="submit" onClick={callMockAPI}>
+        <Form.Field>
+          <Form.Group inline>
+            <label>
+              Will the vehicle be <b>used outside the registered state</b>?
+            </label>
+            <Form.Radio
+              label="Yes"
+              value="yes"
+              checked={usedOutsideState === "yes"}
+              onChange={() => setUsedOutsideState("yes")}
+            />
+            <Form.Radio
+              label="No"
+              value="no"
+              checked={usedOutsideState === "no"}
+              onChange={() => setUsedOutsideState("no")}
+            />
+          </Form.Group>
+        </Form.Field>
+        <Form.Field width={5}>
+          <label>What is the <b>current value</b> of the vehicle?</label>
+          <Input
+            label="£"
+            type="number"
+            min={0}
+            max={50000}
+            placeholder="Vehicle Value"
+            onChange={(e) => setCurrentValue(e.target.value)}
+          />
+
+        </Form.Field>
+        <Form.Field width={5}>
+          <label>When was vehicle first registered?</label>
+          <Input
+            type="date"
+            onChange={(e) => setFirstRegistered(e.target.value)}
+          />
+
+        </Form.Field>
+        <Button color="blue" type="submit" onClick={callMockAPI}>
           Submit
         </Button>
       </Form>

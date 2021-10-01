@@ -14,6 +14,11 @@ function Update() {
   const [postcode, setPostcode] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [engineSize, setEngineSize] = useState("");
+  const [additionalDrivers, setAdditionalDrivers] = useState(0);
+  const [usedForCommercial, setUsedForCommercial] = useState("");
+  const [usedOutsideState, setUsedOutsideState] = useState("");
+  const [currentValue, setCurrentValue] = useState(0);
+  const [firstRegistered, setFirstRegistered] = useState(new Date());
   const [id, setId] = useState(null);
   let history = useHistory();
 
@@ -29,6 +34,11 @@ function Update() {
     setPostcode(localStorage.getItem("postcode"));
     setVehicleType(localStorage.getItem("vehicleType"));
     setEngineSize(localStorage.getItem("engineSize"));
+    setAdditionalDrivers(localStorage.getItem("additionalDrivers"));
+    setUsedForCommercial(localStorage.getItem("usedForCommercial"));
+    setUsedOutsideState(localStorage.getItem("usedOutsideState"));
+    setCurrentValue(localStorage.getItem("currentValue"));
+    setFirstRegistered(localStorage.getItem("firstRegistered"));
   }, []);
 
   const callMockAPI = () => {
