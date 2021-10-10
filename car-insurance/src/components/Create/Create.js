@@ -3,8 +3,13 @@ import React, { useState } from "react";
 import { Button, Form, Input } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
+import useForm from "../../customHooks/useForm";
+import validate from "../../validation/validateInfo";
 
 function Create() {
+
+  const {handleChange,values, handleSubmit, errors} = useForm(validate);
+
   const [prefix, setPrefix] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -21,8 +26,32 @@ function Create() {
   const [currentValue, setCurrentValue] = useState(0);
   const [firstRegistered, setFirstRegistered] = useState(new Date());
 
+  const [validForm, setValidForm] = useState(false);
+  const [invalidPrefix, setInvalidPrefix] = useState(true);
+  const [invalidFirstName, setInvalidFirstName] = useState(true);
 
-  const[invalidPrefix, setInvalidPrefix]=useState(false);
+  function handlePrefixChange(e) {
+    setPrefix(e.target.value);
+    handleChange();
+
+  }
+
+  function handleFirstNameChange(e) {
+    setFirstName(e.target.value);
+    if (firstName == "") {
+      setInvalidFirstName(true);
+    } else {
+      setInvalidFirstName(false);
+    }
+  }
+
+  function handleSubmitButton() {
+    if (!invalidPrefix) {
+      callMockAPI();
+    } else {
+      alert("Form Invalid");
+    }
+  }
 
   let history = useHistory();
 
@@ -53,16 +82,16 @@ function Create() {
       .catch((err) => console.log(err));
   };
 
-
   return (
     <div className="create">
-      <Form size="big">
+      <Form size="big" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Field width={3}>
             <label>Prefix</label>
             <select
+              name="prefix"
               placeholder="Prefix"
-              onChange={(e) => setPrefix(e.target.value)}
+              onChange={(e) => handlePrefixChange(e)}
             >
               <option value="" disabled selected hidden>
                 ...
@@ -73,19 +102,21 @@ function Create() {
               <option value="Ms">Ms</option>
               <option value="Dr">Dr</option>
             </select>
-            {invalidPrefix&&<span>must have prefix</span>}
+            {errors.prefix && <p>{errors.prefix}</p>}
           </Form.Field>
           <Form.Field width={7}>
             <label>First Name</label>
             <input
+              name="firstName"
               placeholder="First Name"
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => handleFirstNameChange(e)}
             />
-            <span>required</span>
+            {invalidFirstName && <span>required</span>}
           </Form.Field>
           <Form.Field width={7}>
             <label>Last Name</label>
             <input
+              name="lastName"
               placeholder="Last Name"
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -94,7 +125,7 @@ function Create() {
         <Form.Field>
           <label>Telephone Number</label>
           <input
-            required
+            name="telephoneNumber"
             placeholder="Telephone Number"
             onChange={(e) => setTelephoneNumber(e.target.value)}
           />
@@ -102,6 +133,7 @@ function Create() {
         <Form.Field>
           <label>Address Line 1</label>
           <input
+            name="addressLine1"
             placeholder="Address Line 1"
             onChange={(e) => setAddressLine1(e.target.value)}
           />
@@ -109,17 +141,23 @@ function Create() {
         <Form.Field>
           <label>Address Line 2</label>
           <input
+            name="addressLine2"
             placeholder="Address Line 2"
             onChange={(e) => setAddressLine2(e.target.value)}
           />
         </Form.Field>
         <Form.Field>
           <label>City</label>
-          <input placeholder="City" onChange={(e) => setCity(e.target.value)} />
+          <input
+            name="city"
+            placeholder="City"
+            onChange={(e) => setCity(e.target.value)}
+          />
         </Form.Field>
         <Form.Field>
           <label>Postcode</label>
           <input
+            name="postcode"
             placeholder="Postcode"
             onChange={(e) => setPostcode(e.target.value)}
           />
@@ -127,6 +165,7 @@ function Create() {
         <Form.Field>
           <label>Vehicle Type</label>
           <select
+            name="vehicleType"
             placeholder="Vehicle Type"
             onChange={(e) => setVehicleType(e.target.value)}
           >
@@ -143,6 +182,7 @@ function Create() {
         <Form.Field>
           <label>Engine Size</label>
           <select
+            name="engineSize"
             placeholder="Engine Size"
             onChange={(e) => setEngineSize(e.target.value)}
           >
@@ -162,6 +202,7 @@ function Create() {
             How many <b>additional drivers</b> will use the vehicle?
           </label>
           <select
+            name="additionalDrivers"
             placeholder="Additional Drivers"
             onChange={(e) => setAdditionalDrivers(e.target.value)}
           >
@@ -232,7 +273,9 @@ function Create() {
             onChange={(e) => setFirstRegistered(e.target.value)}
           />
         </Form.Field>
-        <Button color="blue" type="submit" onClick={callMockAPI}>
+        <Button color="blue" type="submit" 
+        // onClick={() => handleSubmitButton()}
+        >
           Submit
         </Button>
       </Form>

@@ -19,11 +19,14 @@ function Update() {
   const [usedOutsideState, setUsedOutsideState] = useState("");
   const [currentValue, setCurrentValue] = useState(0);
   const [firstRegistered, setFirstRegistered] = useState(new Date());
+
+  
   const [id, setId] = useState(null);
   let history = useHistory();
 
   useEffect(() => {
     setId(localStorage.getItem("id"));
+    console.log(id)
     setPrefix(localStorage.getItem("prefix"));
     setFirstName(localStorage.getItem("firstName"));
     setLastName(localStorage.getItem("lastName"));
