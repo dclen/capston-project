@@ -91,7 +91,7 @@ function Create() {
             <select
               name="prefix"
               placeholder="Prefix"
-              onChange={(e) => handlePrefixChange(e)}
+              onChange={(e) => setPrefix(e.target.value)}
             >
               <option value="" disabled selected hidden>
                 ...
@@ -274,7 +274,7 @@ function Create() {
           />
         </Form.Field>
         <Button color="blue" type="submit" 
-        // onClick={() => handleSubmitButton()}
+         onClick={() => callMockAPI()}
         >
           Submit
         </Button>

@@ -65,8 +65,6 @@ function SingleDriver() {
               <Table.HeaderCell>Used Outside State?</Table.HeaderCell>
               <Table.HeaderCell>Current Value(£)</Table.HeaderCell>
               <Table.HeaderCell>Date Registered</Table.HeaderCell>
-              <Table.HeaderCell>Update</Table.HeaderCell>
-              <Table.HeaderCell>Delete</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -88,18 +86,6 @@ function SingleDriver() {
               <Table.Cell>{tableData.usedOutsideState}</Table.Cell>
               <Table.Cell>{tableData.currentValue}</Table.Cell>
               <Table.Cell>{tableData.firstRegistered}</Table.Cell>
-
-              <Table.Cell>
-                <Link to="/update">
-                  <Button color="green">Update</Button>
-                </Link>
-              </Table.Cell>
-
-              <Table.Cell>
-                <Link to="/read">
-                  <Button color="red">Delete</Button>
-                </Link>
-              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

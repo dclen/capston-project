@@ -26,7 +26,6 @@ function Update() {
 
   useEffect(() => {
     setId(localStorage.getItem("id"));
-    console.log(id)
     setPrefix(localStorage.getItem("prefix"));
     setFirstName(localStorage.getItem("firstName"));
     setLastName(localStorage.getItem("lastName"));

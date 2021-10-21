@@ -26,6 +26,7 @@ function AdminForm() {
       .put(endpointURL, { telephoneNumber: phone })
       .then(alert(`Driver ${id} Phone Updated to ${telephoneNumber}`))
       .then(setDriverIdUpdate(""))
+      .then(setTelephoneNumber(""))
       .catch((err) => {
         console.log(err);
       });
