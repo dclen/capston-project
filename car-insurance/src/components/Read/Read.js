@@ -9,7 +9,7 @@ function Read() {
 
   function callMockAPIWithAxiosGET() {
     const endpointURL =
-      "https://6151d1834a5f22001701d461.mockapi.io/api/v1people";
+      "http://localhost:8080/capstone";
     axios
       .get(endpointURL)
       .then((response) => setTableData(response.data))

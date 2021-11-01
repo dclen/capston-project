@@ -1,15 +1,15 @@
 import "./Create.css";
 import React, { useState } from "react";
-import { Button, Form, Input } from "semantic-ui-react";
+import { Form, Input } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
-import useForm from "../../customHooks/useForm";
-import validate from "../../validation/validateInfo";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function Create() {
-
-  const {handleChange,values, handleSubmit, errors} = useForm(validate);
-
   const [prefix, setPrefix] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,28 +30,9 @@ function Create() {
   const [invalidPrefix, setInvalidPrefix] = useState(true);
   const [invalidFirstName, setInvalidFirstName] = useState(true);
 
-  function handlePrefixChange(e) {
-    setPrefix(e.target.value);
-    handleChange();
-
-  }
-
-  function handleFirstNameChange(e) {
-    setFirstName(e.target.value);
-    if (firstName == "") {
-      setInvalidFirstName(true);
-    } else {
-      setInvalidFirstName(false);
-    }
-  }
-
-  function handleSubmitButton() {
-    if (!invalidPrefix) {
-      callMockAPI();
-    } else {
-      alert("Form Invalid");
-    }
-  }
+  const handleSubmit = () => {
+    //handleSubmit here
+  };
 
   let history = useHistory();
 
@@ -84,201 +65,203 @@ function Create() {
 
   return (
     <div className="create">
-      <Form size="big" onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Field width={3}>
-            <label>Prefix</label>
-            <select
-              name="prefix"
-              placeholder="Prefix"
-              onChange={(e) => setPrefix(e.target.value)}
-            >
-              <option value="" disabled selected hidden>
-                ...
-              </option>
-              <option value="Mr">Mr</option>
-              <option value="Mrs">Mrs</option>
-              <option value="Miss">Miss</option>
-              <option value="Ms">Ms</option>
-              <option value="Dr">Dr</option>
-            </select>
-            {errors.prefix && <p>{errors.prefix}</p>}
-          </Form.Field>
-          <Form.Field width={7}>
-            <label>First Name</label>
-            <input
-              name="firstName"
-              placeholder="First Name"
-              onChange={(e) => handleFirstNameChange(e)}
-            />
-            {invalidFirstName && <span>required</span>}
-          </Form.Field>
-          <Form.Field width={7}>
-            <label>Last Name</label>
-            <input
-              name="lastName"
-              placeholder="Last Name"
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </Form.Field>
-        </Form.Group>
-        <Form.Field>
-          <label>Telephone Number</label>
-          <input
-            name="telephoneNumber"
-            placeholder="Telephone Number"
-            onChange={(e) => setTelephoneNumber(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Address Line 1</label>
-          <input
-            name="addressLine1"
-            placeholder="Address Line 1"
-            onChange={(e) => setAddressLine1(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Address Line 2</label>
-          <input
-            name="addressLine2"
-            placeholder="Address Line 2"
-            onChange={(e) => setAddressLine2(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>City</label>
-          <input
-            name="city"
-            placeholder="City"
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Postcode</label>
-          <input
-            name="postcode"
-            placeholder="Postcode"
-            onChange={(e) => setPostcode(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Vehicle Type</label>
-          <select
-            name="vehicleType"
-            placeholder="Vehicle Type"
-            onChange={(e) => setVehicleType(e.target.value)}
-          >
-            <option value="" disabled selected hidden>
-              Please Choose...
-            </option>
-            <option value="Cabriolet">Cabriolet</option>
-            <option value="Coupe">Coupe</option>
-            <option value="Estate">Estate</option>
-            <option value="Hatchback">Hatchback</option>
-            <option value="Other">Other</option>
-          </select>
-        </Form.Field>
-        <Form.Field>
-          <label>Engine Size</label>
-          <select
-            name="engineSize"
-            placeholder="Engine Size"
-            onChange={(e) => setEngineSize(e.target.value)}
-          >
-            <option value="" disabled selected hidden>
-              Please Choose...
-            </option>
-            <option value="1000cc">1000cc</option>
-            <option value="1600cc">1600cc</option>
-            <option value="2000cc">2000cc</option>
-            <option value="2500cc">2500cc</option>
-            <option value="3000cc">3000cc</option>
-            <option value="Other">Other</option>
-          </select>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            How many <b>additional drivers</b> will use the vehicle?
-          </label>
-          <select
-            name="additionalDrivers"
-            placeholder="Additional Drivers"
-            onChange={(e) => setAdditionalDrivers(e.target.value)}
-          >
-            <option value="" disabled selected hidden>
-              Please Choose...
-            </option>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-          </select>
-        </Form.Field>
-        <Form.Field>
-          <Form.Group inline>
-            <label>
-              Will the vehicle be <b>used for commercial purposes</b>?
-            </label>
-            <Form.Radio
-              label="Yes"
-              value="yes"
-              checked={usedForCommercial === "yes"}
-              onChange={() => setUsedForCommercial("yes")}
-            />
-            <Form.Radio
-              label="No"
-              value="no"
-              checked={usedForCommercial === "no"}
-              onChange={() => setUsedForCommercial("no")}
-            />
-          </Form.Group>
-        </Form.Field>
-        <Form.Field>
-          <Form.Group inline>
-            <label>
-              Will the vehicle be <b>used outside the registered state</b>?
-            </label>
-            <Form.Radio
-              label="Yes"
-              value="yes"
-              checked={usedOutsideState === "yes"}
-              onChange={() => setUsedOutsideState("yes")}
-            />
-            <Form.Radio
-              label="No"
-              value="no"
-              checked={usedOutsideState === "no"}
-              onChange={() => setUsedOutsideState("no")}
-            />
-          </Form.Group>
-        </Form.Field>
-        <Form.Field width={5}>
-          <label>
-            What is the <b>current value</b> of the vehicle?
-          </label>
-          <Input
-            label="£"
-            type="number"
-            min={0}
-            max={50000}
-            placeholder="Vehicle Value"
-            onChange={(e) => setCurrentValue(e.target.value)}
-          />
-        </Form.Field>
-        <Form.Field width={5}>
-          <label>When was vehicle first registered?</label>
-          <Input
-            type="date"
-            onChange={(e) => setFirstRegistered(e.target.value)}
-          />
-        </Form.Field>
-        <Button color="blue" type="submit" 
-         onClick={() => callMockAPI()}
-        >
-          Submit
-        </Button>
-      </Form>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          {" "}
+          <Form size="big" onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Field width={3}>
+                <label>Prefix</label>
+                <select
+                  name="prefix"
+                  placeholder="Prefix"
+                  onChange={(e) => setPrefix(e.target.value)}
+                >
+                  <option value="" disabled selected hidden>
+                    ...
+                  </option>
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Dr">Dr</option>
+                </select>
+              </Form.Field>
+              <Form.Field width={7}>
+                <label>First Name</label>
+                <input
+                  name="firstName"
+                  placeholder="First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+                {invalidFirstName && <span>required</span>}
+              </Form.Field>
+              <Form.Field width={7}>
+                <label>Last Name</label>
+                <input
+                  name="lastName"
+                  placeholder="Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.Field>
+              <label>Telephone Number</label>
+              <input
+                name="telephoneNumber"
+                placeholder="Telephone Number"
+                onChange={(e) => setTelephoneNumber(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Address Line 1</label>
+              <input
+                name="addressLine1"
+                placeholder="Address Line 1"
+                onChange={(e) => setAddressLine1(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Address Line 2</label>
+              <input
+                name="addressLine2"
+                placeholder="Address Line 2"
+                onChange={(e) => setAddressLine2(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>City</label>
+              <input
+                name="city"
+                placeholder="City"
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Postcode</label>
+              <input
+                name="postcode"
+                placeholder="Postcode"
+                onChange={(e) => setPostcode(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Vehicle Type</label>
+              <select
+                name="vehicleType"
+                placeholder="Vehicle Type"
+                onChange={(e) => setVehicleType(e.target.value)}
+              >
+                <option value="" disabled selected hidden>
+                  Please Choose...
+                </option>
+                <option value="Cabriolet">Cabriolet</option>
+                <option value="Coupe">Coupe</option>
+                <option value="Estate">Estate</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Other">Other</option>
+              </select>
+            </Form.Field>
+            <Form.Field>
+              <label>Engine Size</label>
+              <select
+                name="engineSize"
+                placeholder="Engine Size"
+                onChange={(e) => setEngineSize(e.target.value)}
+              >
+                <option value="" disabled selected hidden>
+                  Please Choose...
+                </option>
+                <option value="1000cc">1000cc</option>
+                <option value="1600cc">1600cc</option>
+                <option value="2000cc">2000cc</option>
+                <option value="2500cc">2500cc</option>
+                <option value="3000cc">3000cc</option>
+                <option value="Other">Other</option>
+              </select>
+            </Form.Field>
+            <Form.Field>
+              <label>
+                How many <b>additional drivers</b> will use the vehicle?
+              </label>
+              <select
+                name="additionalDrivers"
+                placeholder="Additional Drivers"
+                onChange={(e) => setAdditionalDrivers(e.target.value)}
+              >
+                <option value="" disabled selected hidden>
+                  Please Choose...
+                </option>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+              </select>
+            </Form.Field>
+            <Form.Field>
+              <Form.Group inline>
+                <label>
+                  Will the vehicle be <b>used for commercial purposes</b>?
+                </label>
+                <Form.Radio
+                  label="Yes"
+                  value="yes"
+                  checked={usedForCommercial === "yes"}
+                  onChange={() => setUsedForCommercial("yes")}
+                />
+                <Form.Radio
+                  label="No"
+                  value="no"
+                  checked={usedForCommercial === "no"}
+                  onChange={() => setUsedForCommercial("no")}
+                />
+              </Form.Group>
+            </Form.Field>
+            <Form.Field>
+              <Form.Group inline>
+                <label>
+                  Will the vehicle be <b>used outside the registered state</b>?
+                </label>
+                <Form.Radio
+                  label="Yes"
+                  value="yes"
+                  checked={usedOutsideState === "yes"}
+                  onChange={() => setUsedOutsideState("yes")}
+                />
+                <Form.Radio
+                  label="No"
+                  value="no"
+                  checked={usedOutsideState === "no"}
+                  onChange={() => setUsedOutsideState("no")}
+                />
+              </Form.Group>
+            </Form.Field>
+            <Form.Field width={5}>
+              <label>
+                What is the <b>current value</b> of the vehicle?
+              </label>
+              <Input
+                label="£"
+                type="number"
+                min={0}
+                max={50000}
+                placeholder="Vehicle Value"
+                onChange={(e) => setCurrentValue(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field width={5}>
+              <label>When was vehicle first registered?</label>
+              <Input
+                type="date"
+                onChange={(e) => setFirstRegistered(e.target.value)}
+              />
+            </Form.Field>
+            <Button variant="contained" onClick={() => callMockAPI()}>
+              Retrieve Quote
+            </Button>
+          </Form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

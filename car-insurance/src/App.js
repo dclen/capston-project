@@ -16,9 +16,6 @@ function App() {
       <Container>
         <div className="App">
           <div>
-            <h1>Car Insurance</h1>
-          </div>
-          <div>
             <Route exact path="/" component={Create} />
           </div>
           <div>
