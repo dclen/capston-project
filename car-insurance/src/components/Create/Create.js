@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 
 function Create() {
@@ -31,6 +32,28 @@ function Create() {
   const [validForm, setValidForm] = useState(false);
   const [invalidPrefix, setInvalidPrefix] = useState(true);
   const [invalidFirstName, setInvalidFirstName] = useState(true);
+
+  const prefixSelections = [
+    {
+      value: "Mr",
+    },
+    {
+      value: "Mrs",
+    },
+    {
+      value: "Miss",
+    },
+    {
+      value: "Ms",
+    },
+    {
+      value: "Dr",
+    },
+  ];
+
+  const handlePrefixChange = (event) => {
+    setPrefix(event.target.value);
+  };
 
   const handleSubmit = () => {
     //handleSubmit here
@@ -78,26 +101,29 @@ function Create() {
             }}
             onSubmit={handleSubmit}
           >
-            <Form.Field width={3}>
-              <label>Prefix</label>
-              <select
-                name="prefix"
-                placeholder="Prefix"
-                onChange={(e) => setPrefix(e.target.value)}
-              >
-                <option value="" disabled selected hidden>
-                  ...
-                </option>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Miss">Miss</option>
-                <option value="Ms">Ms</option>
-                <option value="Dr">Dr</option>
-              </select>
-            </Form.Field>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={2}>
                 <TextField
+                required
+                fullWidth
+                  id="prefix"
+                  select
+                  value={prefix}
+                  label="Prefix"
+                  placeholder="Prefix"
+                  onChange={handlePrefixChange}
+                >
+                  {prefixSelections.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
+              <Grid item xs={5}>
+                <TextField
+                required
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -105,9 +131,9 @@ function Create() {
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
-              {invalidFirstName && <span>{firstName}</span>}
-              <Grid  item xs={6}>
+              <Grid item xs={5}>
                 <TextField
+                required
                   fullWidth
                   name="lastName"
                   label="Last Name"
