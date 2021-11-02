@@ -1,9 +1,11 @@
 import "./Create.css";
 import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
 import { Form, Input } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -67,44 +69,53 @@ function Create() {
     <div className="create">
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          {" "}
-          <Form size="big" onSubmit={handleSubmit}>
-            <Form.Group>
-              <Form.Field width={3}>
-                <label>Prefix</label>
-                <select
-                  name="prefix"
-                  placeholder="Prefix"
-                  onChange={(e) => setPrefix(e.target.value)}
-                >
-                  <option value="" disabled selected hidden>
-                    ...
-                  </option>
-                  <option value="Mr">Mr</option>
-                  <option value="Mrs">Mrs</option>
-                  <option value="Miss">Miss</option>
-                  <option value="Ms">Ms</option>
-                  <option value="Dr">Dr</option>
-                </select>
-              </Form.Field>
-              <Form.Field width={7}>
-                <label>First Name</label>
-                <input
-                  name="firstName"
+          <Box
+            component="form"
+            noValidate
+            autoComplete="off"
+            sx={{
+              "& .MuiTextField-root": { m: 1 },
+            }}
+            onSubmit={handleSubmit}
+          >
+            <Form.Field width={3}>
+              <label>Prefix</label>
+              <select
+                name="prefix"
+                placeholder="Prefix"
+                onChange={(e) => setPrefix(e.target.value)}
+              >
+                <option value="" disabled selected hidden>
+                  ...
+                </option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+                <option value="Ms">Ms</option>
+                <option value="Dr">Dr</option>
+              </select>
+            </Form.Field>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
                   placeholder="First Name"
                   onChange={(e) => setFirstName(e.target.value)}
                 />
-                {invalidFirstName && <span>required</span>}
-              </Form.Field>
-              <Form.Field width={7}>
-                <label>Last Name</label>
-                <input
+              </Grid>
+              {invalidFirstName && <span>{firstName}</span>}
+              <Grid  item xs={6}>
+                <TextField
+                  fullWidth
                   name="lastName"
+                  label="Last Name"
                   placeholder="Last Name"
                   onChange={(e) => setLastName(e.target.value)}
                 />
-              </Form.Field>
-            </Form.Group>
+              </Grid>
+            </Grid>
             <Form.Field>
               <label>Telephone Number</label>
               <input
@@ -270,7 +281,7 @@ function Create() {
                 Retrieve Quote
               </Button>
             </Box>
-          </Form>
+          </Box>
         </CardContent>
       </Card>
     </div>
