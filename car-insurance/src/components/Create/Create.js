@@ -256,9 +256,20 @@ function Create() {
                 onChange={(e) => setFirstRegistered(e.target.value)}
               />
             </Form.Field>
-            <Button variant="contained" onClick={() => callMockAPI()}>
-              Retrieve Quote
-            </Button>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                size="large"
+                variant="contained"
+                onClick={() => callMockAPI()}
+              >
+                Retrieve Quote
+              </Button>
+            </Box>
           </Form>
         </CardContent>
       </Card>
