@@ -1,7 +1,6 @@
 import "./Create.css";
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Form, Input } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import Box from "@mui/material/Box";
@@ -10,6 +9,16 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import InputAdornment from "@mui/material/InputAdornment";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Stack from "@mui/material/Stack";
+import DateAdapter from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import Typography from "@mui/material/Typography";
 
 function Create() {
@@ -27,7 +36,7 @@ function Create() {
   const [usedForCommercial, setUsedForCommercial] = useState("");
   const [usedOutsideState, setUsedOutsideState] = useState("");
   const [currentValue, setCurrentValue] = useState(0);
-  const [firstRegistered, setFirstRegistered] = useState(new Date());
+  const [firstRegistered, setFirstRegistered] = useState(new Date().toDateString());
 
   const [validForm, setValidForm] = useState(false);
   const [invalidPrefix, setInvalidPrefix] = useState(true);
@@ -82,6 +91,10 @@ function Create() {
     setAdditionalDrivers(event.target.value);
   };
 
+  const handleUsedForCommercialChange = (event) => {
+    setUsedForCommercial(event.target.value);
+  };
+
   const handleSubmit = () => {
     //handleSubmit here
   };
@@ -117,17 +130,17 @@ function Create() {
 
   return (
     <div className="create">
-      <Card sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Box
-            component="form"
-            noValidate
-            autoComplete="off"
-            sx={{
-              "& .MuiTextField-root": { m: 1 },
-            }}
-            onSubmit={handleSubmit}
-          >
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        sx={{
+          "& .MuiTextField-root": { m: 1 },
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Card sx={{ minWidth: 275 }}>
+          <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={2}>
                 <TextField
@@ -227,6 +240,10 @@ function Create() {
                 />
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
+        <Card sx={{ minWidth: 275 }}>
+          <CardContent>
             <Grid container spacing={1}>
               <Grid item xs={4}>
                 <TextField
@@ -283,64 +300,87 @@ function Create() {
                 ))}
               </TextField>
             </Grid>
-            <Form.Field>
-              <Form.Group inline>
-                <label>
-                  Will the vehicle be <b>used for commercial purposes</b>?
-                </label>
-                <Form.Radio
-                  label="Yes"
-                  value="yes"
-                  checked={usedForCommercial === "yes"}
-                  onChange={() => setUsedForCommercial("yes")}
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">
+                    Will the vehicle be used for commercial purposes?*
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="commercial"
+                    name="controlled-radio-buttons-group"
+                    value={usedForCommercial}
+                    onChange={handleUsedForCommercialChange}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">
+                    Will the vehicle be used outside the registered state?*
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-label="commercial"
+                    name="controlled-radio-buttons-group"
+                    value={usedOutsideState}
+                    onChange={(e) => setUsedOutsideState(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <TextField
+              required
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">£</InputAdornment>
+                ),
+              }}
+              label="Vehicle Value"
+              type="number"
+              placeholder="Vehicle Value"
+              onChange={(e) => setCurrentValue(e.target.value)}
+            />
+
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <Stack spacing={3}>
+                <DesktopDatePicker
+                  label="When was vehicle first registered?"
+                  inputFormat="dd/MM/yyyy"
+                  value={firstRegistered}
+                  onChange={(e) => setFirstRegistered(e.target.value)}
+                  renderInput={(params) => <TextField {...params} />}
                 />
-                <Form.Radio
-                  label="No"
-                  value="no"
-                  checked={usedForCommercial === "no"}
-                  onChange={() => setUsedForCommercial("no")}
-                />
-              </Form.Group>
-            </Form.Field>
-            <Form.Field>
-              <Form.Group inline>
-                <label>
-                  Will the vehicle be <b>used outside the registered state</b>?
-                </label>
-                <Form.Radio
-                  label="Yes"
-                  value="yes"
-                  checked={usedOutsideState === "yes"}
-                  onChange={() => setUsedOutsideState("yes")}
-                />
-                <Form.Radio
-                  label="No"
-                  value="no"
-                  checked={usedOutsideState === "no"}
-                  onChange={() => setUsedOutsideState("no")}
-                />
-              </Form.Group>
-            </Form.Field>
-            <Form.Field width={5}>
-              <label>
-                What is the <b>current value</b> of the vehicle?
-              </label>
-              <Input
-                label="£"
-                type="number"
-                min={0}
-                max={50000}
-                placeholder="Vehicle Value"
-                onChange={(e) => setCurrentValue(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field width={5}>
-              <label>When was vehicle first registered?</label>
-              <Input
-                type="date"
-                onChange={(e) => setFirstRegistered(e.target.value)}
-              />
-            </Form.Field>
+                {firstRegistered}
+              </Stack>
+            </LocalizationProvider>
+            {/* {firstRegistered} */}
+
             <Box
               sx={{
                 display: "flex",
@@ -355,9 +395,9 @@ function Create() {
                 Retrieve Quote
               </Button>
             </Box>
-          </Box>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Box>
     </div>
   );
 }
