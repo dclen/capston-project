@@ -34,25 +34,52 @@ function Create() {
   const [invalidFirstName, setInvalidFirstName] = useState(true);
 
   const prefixSelections = [
-    {
-      value: "Mr",
-    },
-    {
-      value: "Mrs",
-    },
-    {
-      value: "Miss",
-    },
-    {
-      value: "Ms",
-    },
-    {
-      value: "Dr",
-    },
+    { value: "Mr" },
+    { value: "Mrs" },
+    { value: "Miss" },
+    { value: "Ms" },
+    { value: "Dr" },
+  ];
+
+  const vehicleTypeSelections = [
+    { value: "Cabriolet" },
+    { value: "Coupe" },
+    { value: "Estate" },
+    { value: "Hatchback" },
+    { value: "Other" },
+  ];
+
+  const engineSizeSelections = [
+    { value: "1000cc" },
+    { value: "1600cc" },
+    { value: "2000cc" },
+    { value: "2500cc" },
+    { value: "3000cc" },
+    { value: "Other" },
+  ];
+
+  const additionalDriversSelections = [
+    { value: "0" },
+    { value: "1" },
+    { value: "2" },
+    { value: "3" },
+    { value: "4" },
   ];
 
   const handlePrefixChange = (event) => {
     setPrefix(event.target.value);
+  };
+
+  const handleVehicleTypeChange = (event) => {
+    setVehicleType(event.target.value);
+  };
+
+  const handleEngineSizeChange = (event) => {
+    setEngineSize(event.target.value);
+  };
+
+  const handleAdditionalDriversChange = (event) => {
+    setAdditionalDrivers(event.target.value);
   };
 
   const handleSubmit = () => {
@@ -104,10 +131,10 @@ function Create() {
             <Grid container spacing={2}>
               <Grid item xs={2}>
                 <TextField
-                required
-                fullWidth
-                  id="prefix"
+                  required
+                  fullWidth
                   select
+                  id="prefix"
                   value={prefix}
                   label="Prefix"
                   placeholder="Prefix"
@@ -123,7 +150,7 @@ function Create() {
 
               <Grid item xs={5}>
                 <TextField
-                required
+                  required
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -133,108 +160,129 @@ function Create() {
               </Grid>
               <Grid item xs={5}>
                 <TextField
-                required
+                  required
                   fullWidth
-                  name="lastName"
+                  id="lastName"
                   label="Last Name"
+                  name="lastName"
                   placeholder="Last Name"
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
             </Grid>
-            <Form.Field>
-              <label>Telephone Number</label>
-              <input
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="telephoneNumber"
+                label="Telephone Number"
                 name="telephoneNumber"
                 placeholder="Telephone Number"
                 onChange={(e) => setTelephoneNumber(e.target.value)}
               />
-            </Form.Field>
-            <Form.Field>
-              <label>Address Line 1</label>
-              <input
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="addressLine1"
+                label="Address Line 1"
                 name="addressLine1"
                 placeholder="Address Line 1"
                 onChange={(e) => setAddressLine1(e.target.value)}
               />
-            </Form.Field>
-            <Form.Field>
-              <label>Address Line 2</label>
-              <input
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="addressLine2"
+                label="Address Line 2"
                 name="addressLine2"
                 placeholder="Address Line 2"
                 onChange={(e) => setAddressLine2(e.target.value)}
               />
-            </Form.Field>
-            <Form.Field>
-              <label>City</label>
-              <input
-                name="city"
-                placeholder="City"
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Postcode</label>
-              <input
-                name="postcode"
-                placeholder="Postcode"
-                onChange={(e) => setPostcode(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Vehicle Type</label>
-              <select
-                name="vehicleType"
-                placeholder="Vehicle Type"
-                onChange={(e) => setVehicleType(e.target.value)}
-              >
-                <option value="" disabled selected hidden>
-                  Please Choose...
-                </option>
-                <option value="Cabriolet">Cabriolet</option>
-                <option value="Coupe">Coupe</option>
-                <option value="Estate">Estate</option>
-                <option value="Hatchback">Hatchback</option>
-                <option value="Other">Other</option>
-              </select>
-            </Form.Field>
-            <Form.Field>
-              <label>Engine Size</label>
-              <select
-                name="engineSize"
-                placeholder="Engine Size"
-                onChange={(e) => setEngineSize(e.target.value)}
-              >
-                <option value="" disabled selected hidden>
-                  Please Choose...
-                </option>
-                <option value="1000cc">1000cc</option>
-                <option value="1600cc">1600cc</option>
-                <option value="2000cc">2000cc</option>
-                <option value="2500cc">2500cc</option>
-                <option value="3000cc">3000cc</option>
-                <option value="Other">Other</option>
-              </select>
-            </Form.Field>
-            <Form.Field>
-              <label>
-                How many <b>additional drivers</b> will use the vehicle?
-              </label>
-              <select
+            </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  fullWidth
+                  id="city"
+                  name="city"
+                  label="City"
+                  placeholder="City"
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  required
+                  fullWidth
+                  id="city"
+                  label="Postcode"
+                  name="postcode"
+                  placeholder="Postcode"
+                  onChange={(e) => setPostcode(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  fullWidth
+                  select
+                  value={vehicleType}
+                  label="Vehicle Type"
+                  name="vehicleType"
+                  placeholder="Vehicle Type"
+                  onChange={handleVehicleTypeChange}
+                >
+                  {vehicleTypeSelections.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  required
+                  fullWidth
+                  select
+                  value={engineSize}
+                  label="Engine Size"
+                  name="engineSize"
+                  placeholder="Engine Size"
+                  onChange={handleEngineSizeChange}
+                >
+                  {engineSizeSelections.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                required
+                fullWidth
+                select
+                value={additionalDrivers}
+                label="Additional Drivers"
                 name="additionalDrivers"
                 placeholder="Additional Drivers"
-                onChange={(e) => setAdditionalDrivers(e.target.value)}
+                onChange={handleAdditionalDriversChange}
               >
-                <option value="" disabled selected hidden>
-                  Please Choose...
-                </option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-              </select>
-            </Form.Field>
+                {additionalDriversSelections.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
             <Form.Field>
               <Form.Group inline>
                 <label>
