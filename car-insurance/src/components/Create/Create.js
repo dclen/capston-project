@@ -76,33 +76,9 @@ function Create() {
     { value: "4" },
   ];
 
-  const handlePrefixChange = (event) => {
-    setPrefix(event.target.value);
-  };
-
-  const handleVehicleTypeChange = (event) => {
-    setVehicleType(event.target.value);
-  };
-
-  const handleEngineSizeChange = (event) => {
-    setEngineSize(event.target.value);
-  };
-
-  const handleAdditionalDriversChange = (event) => {
-    setAdditionalDrivers(event.target.value);
-  };
-
-  const handleUsedForCommercialChange = (event) => {
-    setUsedForCommercial(event.target.value);
-  };
-
   const handleSubmit = () => {
     //handleSubmit here
   };
-
-  const handleChange = () => {
-    console.log(firstRegistered)
-  }
 
   let history = useHistory();
 
@@ -156,7 +132,7 @@ function Create() {
                   value={prefix}
                   label="Prefix"
                   placeholder="Prefix"
-                  onChange={handlePrefixChange}
+                  onChange={(e) => setPrefix(e.target.value)}
                 >
                   {prefixSelections.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -220,7 +196,6 @@ function Create() {
                 placeholder="Address Line 2"
                 onChange={(e) => setAddressLine2(e.target.value)}
               />
-              {engineSize}
             </Grid>
             <Grid container spacing={1}>
               <Grid item xs={4}>
@@ -260,7 +235,7 @@ function Create() {
                   label="Vehicle Type"
                   name="vehicleType"
                   placeholder="Vehicle Type"
-                  onChange={handleVehicleTypeChange}
+                  onChange={(e) => setVehicleType(e.target.value)}
                 >
                   {vehicleTypeSelections.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -278,7 +253,7 @@ function Create() {
                   label="Engine Size"
                   name="engineSize"
                   placeholder="Engine Size"
-                  onChange={handleEngineSizeChange}
+                  onChange={(e) => setEngineSize(e.target.value)}
                 >
                   {engineSizeSelections.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -297,7 +272,7 @@ function Create() {
                 label="Additional Drivers"
                 name="additionalDrivers"
                 placeholder="Additional Drivers"
-                onChange={handleAdditionalDriversChange}
+                onChange={(e) => setAdditionalDrivers(e.target.value)}
               >
                 {additionalDriversSelections.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -317,7 +292,7 @@ function Create() {
                     aria-label="commercial"
                     name="controlled-radio-buttons-group"
                     value={usedForCommercial}
-                    onChange={handleUsedForCommercialChange}
+                    onChange={(e) => setUsedForCommercial(e.target.value)}
                   >
                     <FormControlLabel
                       value={true}
@@ -376,7 +351,7 @@ function Create() {
             <TextField
               required
               fullWidth
-              format="dd/MM/yy"
+              InputLabelProps={{ shrink: true }}
               label="Date"
               type="date"
               onChange={(e) => setFirstRegistered(e.target.value)}
