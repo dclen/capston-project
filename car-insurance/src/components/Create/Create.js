@@ -33,10 +33,11 @@ function Create() {
   const [vehicleType, setVehicleType] = useState("");
   const [engineSize, setEngineSize] = useState("");
   const [additionalDrivers, setAdditionalDrivers] = useState(0);
-  const [usedForCommercial, setUsedForCommercial] = useState("");
-  const [usedOutsideState, setUsedOutsideState] = useState("");
+  const [usedForCommercial, setUsedForCommercial] = useState(null);
+  const [usedOutsideState, setUsedOutsideState] = useState(null);
   const [currentValue, setCurrentValue] = useState(0);
-  const [firstRegistered, setFirstRegistered] = useState(new Date().toDateString());
+  const [firstRegistered, setFirstRegistered] = useState(new Date());
+  const [finalQuoteAmount, setFinalQuoteAmount] = useState(0);
 
   const [validForm, setValidForm] = useState(false);
   const [invalidPrefix, setInvalidPrefix] = useState(true);
@@ -59,12 +60,12 @@ function Create() {
   ];
 
   const engineSizeSelections = [
-    { value: "1000cc" },
-    { value: "1600cc" },
-    { value: "2000cc" },
-    { value: "2500cc" },
-    { value: "3000cc" },
-    { value: "Other" },
+    { value: "1000", displayName: "1000cc"},
+    { value: "1600", displayName: "1600cc" },
+    { value: "2000", displayName: "2000cc" },
+    { value: "2500", displayName: "2500cc" },
+    { value: "3000", displayName: "3000cc" },
+    { value: "Other", displayName: "Other" },
   ];
 
   const additionalDriversSelections = [
@@ -99,9 +100,13 @@ function Create() {
     //handleSubmit here
   };
 
+  const handleChange = () => {
+    console.log(firstRegistered)
+  }
+
   let history = useHistory();
 
-  const callMockAPI = () => {
+  const getQuoteFromAPI = () => {
     const formData = {
       prefix,
       firstName,
@@ -121,10 +126,10 @@ function Create() {
     };
 
     const endpointURL =
-      "https://6151d1834a5f22001701d461.mockapi.io/api/v1/people";
+      "http://localhost:8080/capstone/calculatequote";
     axios
-      .post(endpointURL, formData)
-      .then((response) => history.push("/read"))
+      .get(endpointURL, {params: formData})
+      .then((response) => setFinalQuoteAmount(response.data))
       .catch((err) => console.log(err));
   };
 
@@ -215,6 +220,7 @@ function Create() {
                 placeholder="Address Line 2"
                 onChange={(e) => setAddressLine2(e.target.value)}
               />
+              {engineSize}
             </Grid>
             <Grid container spacing={1}>
               <Grid item xs={4}>
@@ -276,7 +282,7 @@ function Create() {
                 >
                   {engineSizeSelections.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
-                      {option.value}
+                      {option.displayName}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -314,12 +320,12 @@ function Create() {
                     onChange={handleUsedForCommercialChange}
                   >
                     <FormControlLabel
-                      value="yes"
+                      value={true}
                       control={<Radio />}
                       label="Yes"
                     />
                     <FormControlLabel
-                      value="no"
+                      value={false}
                       control={<Radio />}
                       label="No"
                     />
@@ -339,12 +345,12 @@ function Create() {
                     onChange={(e) => setUsedOutsideState(e.target.value)}
                   >
                     <FormControlLabel
-                      value="yes"
+                      value={true}
                       control={<Radio />}
                       label="Yes"
                     />
                     <FormControlLabel
-                      value="no"
+                      value={false}
                       control={<Radio />}
                       label="No"
                     />
@@ -367,20 +373,27 @@ function Create() {
               onChange={(e) => setCurrentValue(e.target.value)}
             />
 
-            <LocalizationProvider dateAdapter={DateAdapter}>
+            <TextField
+              required
+              fullWidth
+              format="dd/MM/yy"
+              label="Date"
+              type="date"
+              onChange={(e) => setFirstRegistered(e.target.value)}
+            />
+
+            {/* <LocalizationProvider dateAdapter={DateAdapter}>
               <Stack spacing={3}>
                 <DesktopDatePicker
                   label="When was vehicle first registered?"
+                  type="date"
                   inputFormat="dd/MM/yyyy"
                   value={firstRegistered}
-                  onChange={(e) => setFirstRegistered(e.target.value)}
+                  onChange={(e)=>setFirstRegistered(e.target.value)}
                   renderInput={(params) => <TextField {...params} />}
                 />
-                {firstRegistered}
               </Stack>
-            </LocalizationProvider>
-            {/* {firstRegistered} */}
-
+            </LocalizationProvider> */}
             <Box
               sx={{
                 display: "flex",
@@ -390,11 +403,12 @@ function Create() {
               <Button
                 size="large"
                 variant="contained"
-                onClick={() => callMockAPI()}
+                onClick={() => getQuoteFromAPI()}
               >
                 Retrieve Quote
               </Button>
             </Box>
+            {finalQuoteAmount}
           </CardContent>
         </Card>
       </Box>

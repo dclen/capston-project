@@ -39,7 +39,7 @@ function Read() {
     localStorage.setItem("usedForCommercial", data.usedForCommercial);
     localStorage.setItem("usedOutsideState", data.usedOutsideState);
     localStorage.setItem("currentValue", data.currentValue);
-    localStorage.setItem("firstRegistered", data.firstRegistered);
+    localStorage.setItem("dateRegistered", data.dateRegistered);
   }
 
   function onDelete(id) {
@@ -97,7 +97,7 @@ function Read() {
                 <Table.Cell>{data.usedForCommercial}</Table.Cell>
                 <Table.Cell>{data.usedOutsideState}</Table.Cell>
                 <Table.Cell>{data.currentValue}</Table.Cell>
-                <Table.Cell>{data.firstRegistered}</Table.Cell>
+                <Table.Cell>{data.dateRegistered}</Table.Cell>
 
                 <Table.Cell>
                   <Link to="/update">
